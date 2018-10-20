@@ -1,0 +1,154 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style>
+        .del{
+            color:red
+        }
+        #no {
+            margin-left: 367px;
+        }
+        .del {
+            color: red;
+            cursor: pointer;
+        }
+
+        .del:hover {
+             color: #c62424;
+        }
+
+        #window {
+            width: 412px;
+            height: 185px;
+            border: 2px solid grey;
+            background-color: white;
+            position: absolute;
+            padding:3px;
+            top: -1000px;         
+        }
+
+        #ok {
+            margin-left: 160px;
+        }
+
+        .edit {
+            color: #fea502;
+        }
+
+        .edit:hover {
+            color: #db9007;
+            text-decoration:none;
+         }
+    </style>
+</head>
+<body>
+
+    <script>
+        $(function () {
+            //при загрузки страницы предупреждение о удаленнии невидимо
+            $('#window').hide();
+            //обработчик события клик для кнопки удаления канала
+            $('.del').click(function (event) {
+                //настройка размеров сообщения в зависимости от размеров окна
+                if ($(window).width() < '565') {
+                    $('#window').css({
+                        width: '283px',
+                        height: '185px',
+                        border: '2px solid grey',
+                        backgroundColor: 'white',
+                        position: 'absolute',
+                        padding: '3px',
+                        
+                    });
+                    $('#no').css({ marginLeft: '237px' });
+                    $('#ok').css({ marginLeft: '103px' });
+
+                    //расчет позиции сообщения, что бы оно появлялось коло канала которое нужно удалить
+                    var pos = $(this).offset();
+                    var elem_top = pos.top - 150;
+                    var result_position = elem_top + "px";
+
+                    var width_window = $('body').width();
+                    var margin = (width_window / 2) - 140;
+                    var margin_left = margin + "px";
+
+                    //делаем сообщение видимым и применяем нужное позиционирование
+                    $('#window').css({ 'top': result_position, 'left': margin_left }).slideDown(500);
+                }
+                else
+                {
+                    var pos = $(this).offset();
+                    var elem_top = pos.top - 150;
+                    var result_position = elem_top + "px";
+
+                    var width_window = $('body').width();
+                    var margin = (width_window / 2) - 186;
+                    var margin_left = margin + "px";
+
+                    $('#window').css({ 'top': result_position, 'left': margin_left }).slideDown(500);
+                }
+                //узнаем id канала по которому кликнули
+                var idchannel = event.target.id;
+                //обработчик события для кнопки подтверждения удаления канала
+                $('#ok').click(function () {
+                    //формируем гет запрос на удаление канала
+                    var url = "http://ytd.com.ua//Users/DeleteChannel/" + idchannel;
+                    //отправляем запрос и перегружаем страницу
+                    location.href = url;
+                });               
+                //кнопка закрытия сообщения
+                $('#no').click(function () {
+                    $('#window').slideUp(500);
+                });
+            });
+        });
+    </script>
+
+    <div id="window">
+        <!--<span id="no">X</span>-->
+        <input type="button" class="btn btn-danger" id="no" value="X">
+        <font color="red"><h3 align="center">Вы уверены что хотите удалить этот канал?</h3></font>
+        <br>
+        <input type="button" class="btn btn-default" id="ok" value="удалить">
+        <!--<p class="del" id="ok" align="center">удалить</p>-->
+    </div>
+
+    <h2 align="center" style="margin-bottom:24px; font-size: 22px;">Личный Кабинет</h2>
+
+    <p align="center"><a href="/Users/AddChannel">Добавить канал</a></p><br>
+
+    <table border="1" width="90%" align="center">
+        <tr height="50" bgcolor="#ececec">
+            <td colspan="4">@Html.Action("FilterCategory", "Users")</td>
+        </tr>
+        <tr align="center">
+            <td width="15%"><b>Назва канала</b></td>
+            <td><b>Описание</b></td>
+            <td width="12%"><b>Ссылка на канал</b></td>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td align="center">
+                    @item.Name<br>
+                    <a class="edit" href="/Users/EditChannel/@item.Id">Редактировать</a>
+                    <i class="del" id="@item.Id">удалить</i>
+                </td>
+                <td style="padding:5px;">@item.Description</td>
+                <td align="center"><a href="@item.Link" target="_blank">YouTube</a></td>
+            </tr>
+        }
+    </table>
+
+
+</body>
+</html>

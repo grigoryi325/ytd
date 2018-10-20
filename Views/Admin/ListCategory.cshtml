@@ -1,0 +1,32 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Редактирование категорий</title>
+</head>
+<body>
+    <h2 style="text-align:left; margin-bottom: 27px;" class="name_page">Редактирование категорий</h2>
+
+    @ViewBag.obzory
+    <table cellpadding="5">
+        <tr>
+            <td><b>Назва категории</b></td>
+            <td><b>Опции</b></td>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td><a href="/Admin/EditCategory/@item.Id">Редактировать</a></td>
+
+            </tr>
+        }
+    </table>
+</body>
+</html>

@@ -1,0 +1,48 @@
+﻿@model YouTubeDataBase.Models.MessageModels.FeedbackMessage
+
+<h2 class="name_page">Контакты</h2>
+
+<address>
+    По всем вопросам, критике, пожеланиям, или если нашли баг, заполните форму ниже, или пишите на указанную почту. <strong>Email:</strong>   <a href="mailto:helpdeskytd@gmail.com">helpdeskytd@gmail.com</a><br />
+</address>
+
+@if (Session["Email"] != null)
+{
+    <form method="post" action="/Home/Contact/">
+        <input type="hidden" name="EmailUser" value="@Session["Email"]" />
+        <input type="hidden" name="Status" value="yes"/>
+        <input type="hidden" name="AStatus" value="no">
+
+        <label for="Thema">Тема сообщения</label><br>
+        <input class="form-control" type="text" name="Thema" id="Thema" placeholder="Введите тему сообщения" required="" /><br>
+
+        <label>Выберите тип сообщения</label>
+        @Html.DropDownListFor(model => model.CategoryMessageId, ViewBag.CategoriesMessages as SelectList, new { @class = "form-control" })<br>
+
+        <label for="Description">Текст сообщения</label><br>
+        <textarea class="form-control" name="Description" cols="21" rows="10" id="Description" placeholder="
+        Введите сообщение" required="">
+    </textarea><br>
+
+        <input class="btn btn-default" type="submit" value="Отправить сообщение">
+    </form>
+}
+else
+{
+    <p style="font-style:italic;">Чтобы воспользоваться формой обратной связи, нужно авторизоваться на сайте.</p>
+
+    <form method="post" action="" disabled>
+
+        <label for="Thema">Тема сообщения</label><br>
+        <input disabled class="form-control"/><br>
+
+        <label>Выберите тип сообщения</label>
+        @Html.DropDownListFor(model => model.CategoryMessageId, ViewBag.CategoriesMessages as SelectList, new { @class = "form-control", @disabled = "disabled" })<br>
+
+        <label for="Description">Текст сообщения</label><br>
+        <textarea disabled class="form-control" name="Description" cols="21" rows="10" >
+    </textarea><br>
+
+        <input disabled class="btn btn-default" type="submit" value="Отправить сообщение">
+    </form>
+}

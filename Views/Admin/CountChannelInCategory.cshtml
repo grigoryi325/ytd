@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "CountChannelInCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="text-align:left; margin-bottom: 27px;" class="name_page"">Количество каналов в категориях</h2>
+<table>
+    @foreach (var b in Model)
+    {
+    <tr>
+        <th>@b.CountChannel - </th>
+        <td>@b.NameCategory</td>
+    </tr>
+    }
+</table>

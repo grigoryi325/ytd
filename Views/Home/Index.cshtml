@@ -1,0 +1,74 @@
+﻿@model YouTubeDataBase.Models.PageModels.ChannelsListViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .search {
+        background-color: #8080805e;
+    }
+</style>
+
+<script>
+    //показуем статистику только администраторам
+    $(function () {
+        var role = $(".statistics").attr("id");
+        if (role != "admin") {
+            $(".statistics").hide();
+        } else {
+            $(".statistics").show();
+        }
+    });
+</script>
+
+<h2 align="center" style="margin-bottom:24px; font-size: 22px;">Поиск YouTube каналов</h2>
+
+<table border="1" width="90%" align="center">
+    <tr>
+        <td colspan="3" style="padding:5px;" class="search">
+            @Html.Action("Search", "Home")
+        </td>
+    </tr>
+    <tr height="50" bgcolor="#ececec">
+        <td colspan="3">@Html.Action("Filter", "Home")</td>
+    </tr>
+    <tr align="center">
+        <td width="15%"><b>Назва канала</b></td>
+        <td><b>Описание</b></td>
+        <td width="12%"><b>Ссылка на канал</b></td>
+    </tr>
+    @if (ViewBag.Message != null)
+    {
+        <tr align="center">
+            <td colspan="3" height="60" align="center" valign="middle"><p><b>@ViewBag.Message</b></p></td>
+        </tr>
+    }
+    else
+    {
+        foreach (var item in Model.Channels)
+        {
+            <tr>
+                <td align="center">@item.Name</td>
+                <td style="padding:5px;">@item.Description</td>
+                <td align="center"><a href="@item.Link" target="_blank">YouTube</a></td>
+            </tr>
+        }
+    }
+</table>
+@if (ViewBag.Message == null)
+{
+    <p class="pagelink" align="center">@Html.PageLinks(Model.PagingInfo, x => Url.Action("Index", new { page = x, id = Session["category"], time = Session["time"], txt = Session["txt"], @class = "btn btn-default" }))</p>
+}
+    <div class="statistics" id="@Session["Role"]">
+        <!--LiveInternet counter-->
+        <script type="text/javascript">
+            document.write("<p align='center'><a href='//www.liveinternet.ru/click' " +
+                "target=_blank><img src='//counter.yadro.ru/hit?t25.6;r" +
+                escape(document.referrer) + ((typeof (screen) == "undefined") ? "" :
+                    ";s" + screen.width + "*" + screen.height + "*" + (screen.colorDepth ?
+                        screen.colorDepth : screen.pixelDepth)) + ";u" + escape(document.URL) +
+                ";h" + escape(document.title.substring(0, 150)) + ";" + Math.random() +
+                "' alt='' title='LiveInternet: показане число відвідувачів за" +
+                " сьогодні' " +
+                "border='0' width='88' height='15'><\/a></p>")
+        </script><!--/LiveInternet-->
+    </div>

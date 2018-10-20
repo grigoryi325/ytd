@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddCategory</title>
+</head>
+<body>
+    <h2 style="text-align:left; margin-bottom: 27px;" class="name_page">Добавление Категории</h2>
+
+    <form method="post" action="/Admin/AddCategory">
+        <label for="Name">Введите название новой категории</label><br>
+        <input class="form-control" type="text" name="Name" id="Name" required=""/><br>
+
+        <input class="btn btn-default" type="submit" value="Добавить" />
+    </form>
+    <br>
+</body>
+</html>

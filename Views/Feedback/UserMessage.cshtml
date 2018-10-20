@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "UserMessage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="name_page">Сообщения</h2>
+
+@foreach (var item in Model)
+{
+    if (item.ADescription != null)
+    {
+        <div class="alert alert-success" role="alert" id="message">
+            <h4><i>@item.EmailUser</i><br> <b> @item.Thema</b></h4>
+            <p>@item.Description</p>
+
+            <div id="admin">
+                <hr>
+                <h4 class="alert-heading">Ответ от администратора : @item.AdminEmail</h4>
+                <p id="answer">@item.ADescription</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div style="background-color: #e5e5e5" class="alert alert-success" role="alert" id="message">
+            <h4><i>@item.EmailUser</i><br> <b> @item.Thema</b></h4>
+            <p>@item.Description</p>
+        </div>
+    }
+}

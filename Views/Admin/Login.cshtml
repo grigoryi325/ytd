@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="text-align:left; margin-bottom: 27px;" class="name_page">Вход для администраторов</h2>
+
+<form method="post" action="/Admin/Login">
+    <label>Email</label><br>
+    <input class="form-control" type="email" required="" placeholder="введите email" name="Email" /><br><br>
+
+    <label>Пароль</label><br>
+    <input class="form-control" type="password" required="" placeholder="введите пароль" name="Password" /><br><br>
+
+    <input class="btn btn-default" type="submit" value="Вход">
+</form>
+

@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YTD</title>
+    @Styles.Render("~/Content/bootstrap.css")
+    @Styles.Render("~/Content/Site.css")
+    @Scripts.Render("~/Scripts/jquery-3.2.1.js")
+    @*@Scripts.Render("~/Scripts/jquery.validate.js")*@
+    @Scripts.Render("~/Scripts/bootstrap.min.js")
+</head>
+<body>
+    <script>
+        $(function () {
+            if ($(window).width() < '565') {
+                $('.mybody').css({ marginTop: '22px' });
+            } else {
+                $('.mybody').css({ marginTop: '-13px' });
+            }
+        });
+    </script>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header container-fluid">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("YouTube Data Base", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Главная", "Index", "Home")</li>
+                    <li>@Html.ActionLink("О сайте", "About", "Home")</li>
+                    <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>
+                </ul>
+                <!--Изменение меню в зависимости от зарегистрированого пользователя-->
+                <ul class="nav navbar-nav navbar-right">
+                    @if (Session["Id"] != null)
+                    {
+                        if (Session["Role"].ToString() == "admin")
+                        {
+                            <li>@Html.ActionLink("Админ Панель", "Index", "Admin")</li>
+                            <li><a href="/Admin/EditAccount/@Session["Id"]" title="Редактировать аккаунт">Здравствуйте @Session["Email"]</a></li>
+                        }
+                        else if (Session["Role"].ToString() == "user")
+                        {
+                            <li>@Html.ActionLink("Личный кабинет", "Index", "Users")</li>
+                            <li><a href="/Account/EditAccount/@Session["Id"]" title="Редактировать аккаунт">Здравствуйте @Session["Email"]</a></li>
+
+                             @Html.Action("CountUserMessage", "Feedback")
+                        }
+                        <li><a href="/Account/DelSession/"> Выйти</a></li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Регистрация", "RegisterUser", "Account")</li>
+                        <li>@Html.ActionLink("Вход", "Login", "Account")</li>
+                    }
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content mybody">
+        @RenderBody()
+
+        <footer class=""></footer>
+    </div>
+
+</body>
+</html>

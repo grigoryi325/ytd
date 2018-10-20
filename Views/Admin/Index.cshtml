@@ -1,0 +1,33 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h2 class="name_page">Панель управление сайтом YouTube Data Base</h2>
+    <h4 class="message_page" style="text-align:center;">Доступ только для админов и управлябщих сайтом</h4>
+    <br>
+    <ol>
+        <li>
+            <a href="/Admin/IncomingMessages">Сообщения от пользователей </a>
+            @if (ViewBag.CountNewMessae != 0)
+            {
+               <b><span> + </span>@ViewBag.CountNewMessae</b>
+            }
+            
+        </li>
+        <li><a href="/Feedback/HistoryAnswerAdminMessage">История сообщений</a></li>
+        <li><a href="/Admin/AddCategory">Добавление категории канала  YouTube</a></li>
+        <li><a href="/Admin/ListCategory">Редактирование категорий</a></li>
+        <li><a href="/Admin/CountChannelInCategory">Количество каналов в категориях</a></li>
+        <li><a href="/Admin/Statistics">Статистика</a></li>
+    </ol>
+</body>
+</html>

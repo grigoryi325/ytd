@@ -1,0 +1,33 @@
+﻿@model IEnumerable<YouTubeDataBase.Models.HomeModels.Category>
+
+<script>
+    $(function () {
+        var category_id = Number($(".category").attr("id"));
+        var time_id = $(".time").attr("id");
+        $("select option").each(function () {
+            var id = $(this).attr("value");
+            var time = $(this).attr("value");
+            //console.log($(this).text());
+            if ((id == category_id) || (time_id == time)) {
+                $(this).attr("selected", true);
+            }
+        });
+    });
+</script>
+
+<form method="get" action="/Home/Index">
+    <input type="hidden" class="category" id="@Convert.ToInt32(Session["category"])">
+    <input type="hidden" class="time" id="@(Session["time"].ToString())">
+    <select name="id" id="category">
+        <option>Все категории</option>
+        @foreach (var s in Model)
+        {
+            <option value="@s.Id">@s.Name</option>
+        }
+    </select>
+    <select name="time" id="time">
+        <option value="desc">сначала новые</option>
+        <option value="asc">cчала cтарые</option>>
+    </select>
+    <input type="submit" id="send" value="Фильтровать">
+</form>

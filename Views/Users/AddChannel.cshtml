@@ -1,0 +1,68 @@
+﻿@model YouTubeDataBase.Models.HomeModels.Channel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddChannel</title>
+</head>
+<body>
+    <script>
+        $(function () {
+            //Ограничение на количество символов
+            var maxCount = 500;
+
+            $("#counter").html(maxCount);
+
+            $("#Description").keyup(function () {
+                var revText = this.value.length;
+
+                if (this.value.length > maxCount) {
+                    this.value = this.value.substr(0, maxCount);
+                }
+                var cnt = (maxCount - revText);
+                if (cnt <= 0) { $("#counter").html('0'); }
+                else { $("#counter").html(cnt); }
+
+                if ($("#counter").text() == "0") {
+                    $(".counter").css({ color: 'red' });
+                } else {
+                    $(".counter").css({ color: 'grey' });
+                }
+            });
+        });
+    </script>
+    <h2 style="text-align:left; margin-bottom: 27px;" class="name_page">Добавление канала</h2>
+
+    @*@Html.BeginForm("Users", "AddChannel")*@
+
+    <form method="post" action="/Users/AddChannel/">
+        <input type="hidden" name="Email" value="@ViewBag.Email">
+
+
+        <label>Категория канала</label>
+        @Html.DropDownListFor(model => model.CategoryId, ViewBag.Categories as SelectList, new { @class = "form-control" })<br>
+
+
+        <label for="">Назва канала</label><br>
+        <input class="form-control" type="text" name="Name" id="Name" placeholder="Введите назву канала" required=""/><br>
+
+        <label for="Description">Описание</label><br>
+        <textarea class="form-control" name="Description" cols="21" rows="10" id="Description" placeholder="
+Чем четче и кратче сформировано описание
+тем больше шансов что его прочтут
+соискатели." required=""></textarea>
+        <!--вывод количества допустимых символов-->
+        <div class="counter">Осталось символов: <span id="counter"></span></div><br />
+
+        <label for="Link">Ссылка на канал в YouTube</label><br>
+        <input class="form-control" placeholder="Ccылка на главную страницу канала в YouTube" type="text" name="Link" id="Link" required=""/><br>
+
+        <input class="btn btn-default" type="submit" value="Добавить канал">
+    </form>
+</body>
+</html>
